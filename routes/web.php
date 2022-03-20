@@ -27,4 +27,5 @@ Route::namespace('Sample')->group(function (){
   Route::get('/sample', [SampleController::class, 'index']);
   Route::get('/sample/other', [SampleController::class, 'other']);
 });
+Route::get('/sample', [SampleController::class, 'index'])->name('sample');
 Route::get('/hello/{id}', [HelloController::class, 'index'])->where('id', '[0-9]+');
