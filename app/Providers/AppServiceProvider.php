@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\MyClasses\MyService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,8 +24,6 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot()
   {
-    config([
-      'sample.data' => ['こんにちは', 'どうも', 'さようなら']
-    ]);
+    app()->bind('App\MyClasses\MyServiceInterface', 'App\MyClasses\PowerMyService');
   }
 }
