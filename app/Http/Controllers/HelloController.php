@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -16,21 +16,34 @@ class HelloController extends Controller
     $this->fname = 'hello.txt';
   }
 
-  public function index()
+  public function index(Request $request, Response $response)
   {
-    $sample_msg = Storage::disk('public')->url($this->fname);
-    $sample_data = Storage::disk('public')->get($this->fname);
+    $name = $request->query('name');
+    $mail = $request->query('mail');
+    $tel = $request->query('tel');
+    $msg = $name . ', ' . $mail . ', ' . $tel;
+    $keys = ['名前', 'メール', '電話'];
+    $values = [$name, $mail, $tel];
+
     $data = [
-      'msg' => $sample_msg,
-      'data' => explode(PHP_EOL, $sample_data)
+      'msg' => $msg,
+      'keys' => $keys,
+      'values' => $values
     ];
 
+    $request->flash();
     return view('hello.index', $data);
   }
 
-  public function other($msg)
+  public function other()
   {
-    Storage::disk('public')->prepend($this->fname, $msg);
-    return redirect()->route('hello');
+    $data = [
+      'name' => 'Taro',
+      'mail' => 'taro@yamada',
+      'tel' => '090-999-999'
+    ];
+    $query_str = http_build_query($data);
+    $data['msg'] = $query_str;
+    return redirect()->route('hello', $data);
   }
 }
