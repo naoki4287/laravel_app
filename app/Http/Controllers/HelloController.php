@@ -2,29 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class HelloController extends Controller
 {
+  private $fname;
+
   function __construct()
   {
-    config(['sample.message' => '新しいメッセージ!']);
+    $this->fname = 'hello.txt';
   }
 
   public function index()
   {
-    $sample_msg = env('SAMPLE_MESSAGE');
-    $sample_data = env('SAMPLE_DATA');
+    $sample_msg = Storage::disk('public')->url($this->fname);
+    $sample_data = Storage::disk('public')->get($this->fname);
     $data = [
       'msg' => $sample_msg,
-      'data' => explode(',', $sample_data)
+      'data' => explode(PHP_EOL, $sample_data)
     ];
 
     return view('hello.index', $data);
   }
 
-  public function other(Request $request)
+  public function other($msg)
   {
-    return redirect()->route('sample');
+    Storage::disk('public')->prepend($this->fname, $msg);
+    return redirect()->route('hello');
   }
 }
