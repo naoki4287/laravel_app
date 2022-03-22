@@ -28,7 +28,7 @@ Route::get('/', function () {
 //   Route::get('/sample/other', [SampleController::class, 'other']);
 // });
 // Route::get('/sample', [SampleController::class, 'index'])->name('sample');
-Route::get('/hello', [HelloController::class, 'index'])->middleware('MyMW');
+Route::get('/hello', [HelloController::class, 'index']);
 Route::post('/hello', [HelloController::class, 'index']);
-Route::get('/hello/{id}', [HelloController::class, 'index'])->middleware(App\Http\Middleware\MyMiddleware::class);
+Route::get('/hello/{id}', [HelloController::class, 'index']);
 
