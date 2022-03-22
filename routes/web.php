@@ -19,16 +19,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::middleware([HelloMiddleware::class])->group(function () {
-  Route::get('/hello', [HelloController::class, 'index']);
-  Route::get('/hello/other', [HelloController::class, 'other']);
-});
-Route::namespace('Sample')->group(function (){
-  Route::get('/sample', [SampleController::class, 'index']);
-  Route::get('/sample/other', [SampleController::class, 'other']);
-});
-Route::get('/sample', [SampleController::class, 'index'])->name('sample');
-Route::get('/hello', [HelloController::class, 'index'])->name('hello');
+// Route::middleware([HelloMiddleware::class])->group(function () {
+//   Route::get('/hello', [HelloController::class, 'index']);
+//   Route::get('/hello/other', [HelloController::class, 'other']);
+// });
+// Route::namespace('Sample')->group(function (){
+//   Route::get('/sample', [SampleController::class, 'index']);
+//   Route::get('/sample/other', [SampleController::class, 'other']);
+// });
+// Route::get('/sample', [SampleController::class, 'index'])->name('sample');
+Route::get('/hello', [HelloController::class, 'index'])->middleware('MyMW');
 Route::post('/hello', [HelloController::class, 'index']);
-Route::get('/hello/{id}', [HelloController::class, 'index']);
+Route::get('/hello/{id}', [HelloController::class, 'index'])->middleware(App\Http\Middleware\MyMiddleware::class);
 
