@@ -163,20 +163,21 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        
         /*
-         * Package Service Providers...
-         */
-
+        * Package Service Providers...
+        */
+        
         /*
-         * Application Service Providers...
+        * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        App\Providers\MyServiceProvider::class,
+        
     ],
 
     /*
@@ -190,8 +191,13 @@ return [
     |
     */
 
-    'aliases' => Facade::defaultAliases()->merge([
-        // ...
-    ])->toArray(),
-
+    'aliases' => [
+      'myservice' => App\Facades\MyService::class,
+        ],
+        
+    // 'aliases' => Facade::defaultAliases()->merge([
+    //   'myservice' => App\Facades\MyService::class,
+        
+    //     ])->toArray(),
+        
 ];
